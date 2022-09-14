@@ -29,19 +29,6 @@ const Field = () => {
     });
   };
 
-  // Helper function to replace multiple strings within a string in one go.
-  const replaceAll = (str, mapObj) => {
-    const escapedObjKeys = Object.keys(mapObj).map((e) => {
-      // Escape the brackets for proper use in RegExp below.
-      return e.replace('[', '\\[').replace(']', '\\]');
-    });
-    const regex = new RegExp(escapedObjKeys.join('|'), 'g');
-
-    return str.replace(regex, (matched) => {
-      return mapObj[matched];
-    });
-  };
-
   const updateValue = () => {
     // Replace tokens in replacement pattern for use in programmatically populated field.
     Object.entries(replacementMap).forEach(([key, value]) => {
@@ -55,6 +42,19 @@ const Field = () => {
         setReplacementString(updatedValue);
         sdk.field.setValue(updatedValue);
       });
+    });
+  };
+
+  // Helper function to replace multiple strings within a string in one go.
+  const replaceAll = (str, mapObj) => {
+    const escapedObjKeys = Object.keys(mapObj).map((e) => {
+      // Escape the brackets for proper use in RegExp below.
+      return e.replace('[', '\\[').replace(']', '\\]');
+    });
+    const regex = new RegExp(escapedObjKeys.join('|'), 'g');
+
+    return str.replace(regex, (matched) => {
+      return mapObj[matched];
     });
   };
 
