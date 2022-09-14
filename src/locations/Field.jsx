@@ -12,8 +12,9 @@ const Field = () => {
   const replacementPattern = sdk.parameters.instance.replacementPattern;
   const [replacementString, setReplacementString] = useState(replacementPattern);
 
-  // Get tokens from replacement pattern and map values to their corresponding fields.
+  // Init replacementMap, which is used to store token to value mappings.
   const replacementMap = {};
+  // Get tokens from replacement pattern.
   const tokens = replacementPattern.match(/\[.*?\]/g);
 
   const updateReplacementMap = () => {
@@ -41,7 +42,7 @@ const Field = () => {
     });
   };
 
-  const replaceTokens = () => {
+  const updateValue = () => {
     // Replace tokens in replacement pattern for use in programmatically populated field.
     Object.entries(replacementMap).forEach(([key, value]) => {
       const fieldName = key.slice(1, -1);
@@ -63,7 +64,7 @@ const Field = () => {
 
   useEffect(() => {
     updateReplacementMap();
-    replaceTokens();
+    updateValue();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   /*
