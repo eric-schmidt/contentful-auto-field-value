@@ -1,5 +1,17 @@
 This project was bootstrapped with [Create Contentful App](https://github.com/contentful/create-contentful-app).
 
+## Overview
+
+The main goal of this app is to allow content modelers the ability automatically generate the value of a field based on the values of other fields. An example use case is concatenating a first and last name field into the entry title for an author.
+
+## App Configuration
+
+1. Install the app to your space, either via Contentful hosting or by cloning this repo and running `npm install` and `npm start` (hosted at http://localhost:3000).
+2. Enable for Short Text entry fields (the only field type currently supported).
+3. Add an instance parameter called Replacement Pattern (`replacementPattern`) of type Short Text, which will be used to allow content modelers to specify which fields to use as tokens for this fields value. Here is some example help text to add for this instance parameter: `A tokenized pattern of field IDs on this content type that will be used for replacement. Please wrap all tokens in square brackets (e.g. [fieldId]).`.
+4. Create a Short Text field on a content type and edit its appearance to use the Auto Field Value widget.
+5. Update the Replacement Pattern field the above field's appearance configuration dialog to contain references to other Short Text field IDs tokenized with square brackets (e.g. `[fieldId]`).
+
 ## Available Scripts
 
 In the project directory, you can run:
