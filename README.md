@@ -4,6 +4,10 @@ This project was bootstrapped with [Create Contentful App](https://github.com/co
 
 The main goal of this app is to allow content modelers the ability automatically generate the value of a field based on the values of other fields. An example use case is concatenating a first and last name field into the entry title for an author.
 
+## Deployment
+
+This app uses https://github.com/contentful/actions-app-deploy to automatically deploy to Contentful when changes are pushed up to GitHub. Configuration for this process can be found in the `.github/workflows/actions-app-deploy.yml` file.
+
 ## App/Content Type Configuration
 
 1. Install the app to your space, either via Contentful hosting or by cloning this repo and running `npm install` and `npm start` (hosted at http://localhost:3000).
@@ -40,11 +44,11 @@ Read [here](https://www.contentful.com/developers/docs/extensibility/app-framewo
 
 #### `npm run upload-ci`
 
-Similar to `npm run upload` it will upload your app to contentful and activate it. The only difference is   
+Similar to `npm run upload` it will upload your app to contentful and activate it. The only difference is  
 that with this command all required arguments are read from the environment variables, for example when you add
 the upload command to your CI pipeline.
 
-For this command to work, the following environment variables must be set: 
+For this command to work, the following environment variables must be set:
 
 - `CONTENTFUL_ORG_ID` - The ID of your organization
 - `CONTENTFUL_APP_DEF_ID` - The ID of the app to which to add the bundle
@@ -64,9 +68,8 @@ passed into each location. This can be used to interact with Contentful's
 management API. For example
 
 ```js
-  // Use the client
-  cma.locale.getMany({}).then((locales) => console.log(locales))
-
+// Use the client
+cma.locale.getMany({}).then((locales) => console.log(locales));
 ```
 
 Visit the [`contentful-management` documentation](https://www.contentful.com/developers/docs/extensibility/app-framework/sdk/#using-the-contentful-management-library)
