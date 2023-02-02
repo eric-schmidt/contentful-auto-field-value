@@ -21,8 +21,6 @@ const Field = () => {
     replacementMap[locale] = {};
   });
 
-  console.log('HEREEEEEEEEEEEEEEEEEEE');
-
   const updateReplacementMap = () => {
     // Create an object containing initial tokens and matched replaced strings.
     // A manual object is used because Object.entries doesn't seem to work with Maps.
