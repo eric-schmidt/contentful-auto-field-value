@@ -25,12 +25,15 @@ const Field = () => {
     // Create an object containing initial tokens and matched replaced strings.
     // A manual object is used because Object.entries doesn't seem to work with Maps.
     tokens.forEach((token) => {
-      // Remove square brackets from field name.
+      // Remove square brackets from token to get field name.
       const fieldId = token.slice(1, -1);
       // For each of the available locales, create an object to hold that
       // locale's tokens and replacement values.
       availableLocales.forEach((locale) => {
-        replacementMap[locale][token] = sdk.entry.fields[fieldId].getValue(locale);
+        // Only operate on locale if field has localization enabled.
+        if (sdk.entry.fields[fieldId].locales.includes(locale)) {
+          replacementMap[locale][token] = sdk.entry.fields[fieldId].getValue(locale);
+        }
       });
     });
   };
@@ -38,14 +41,16 @@ const Field = () => {
   const updateFieldValues = () => {
     Object.entries(replacementMap).forEach(([locale, tokens]) => {
       Object.entries(tokens).forEach(([token, value]) => {
+        // Remove square brackets from token to get field name.
         const fieldId = token.slice(1, -1);
         sdk.entry.fields[fieldId].onValueChanged(locale, () => {
           updateReplacementMap();
-
+          // For some reason `sdk.field.setValue` doesn't work with locale, instead it sets the value for ALL locales.
+          // Only operate on locale if field has localization enabled.
           availableLocales.forEach((locale) => {
-            // TODO: Figure out why using `sdk.field.setValue` doesn't work with locale,
-            // instead it sets the value for ALL locales.
-            sdk.entry.fields[sdk.field.id].setValue(replaceAll(replacementPattern, replacementMap[locale]), locale);
+            if (sdk.entry.fields[sdk.field.id].locales.includes(locale)) {
+              sdk.entry.fields[sdk.field.id].setValue(replaceAll(replacementPattern, replacementMap[locale]), locale);
+            }
           });
         });
       });
