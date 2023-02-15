@@ -87,7 +87,8 @@ const Field = () => {
   // reuse Contentful's editor components
   // -> https://www.contentful.com/developers/docs/extensibility/field-editors/
 
-  // TODO: Figure out how to properly disable this.
+  // TODO: It's not possible to disable a field from editing via the UI when it is marked as the title.
+  // Instead, you can leverage field-level perms to mark this field as read-only for relevant roles.
   return <SingleLineEditor field={sdk.field} locales={sdk.locales} isInitiallyDisabled={true} />;
 };
 
