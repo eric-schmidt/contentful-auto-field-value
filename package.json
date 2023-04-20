@@ -1,6 +1,8 @@
 {
   "name": "auto-field-value",
-  "version": "0.1.0",
+  "author": "Eric Schmidt",
+  "license": "ISC",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@contentful/app-sdk": "4.12.0",
