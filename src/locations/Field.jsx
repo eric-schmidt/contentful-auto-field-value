@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { /* useCMA, */ useSDK } from "@contentful/react-apps-toolkit";
-import { SingleLineEditor } from "@contentful/field-editor-single-line";
+import React, { useEffect } from 'react';
+import { /* useCMA, */ useSDK } from '@contentful/react-apps-toolkit';
+import { SingleLineEditor } from '@contentful/field-editor-single-line';
 
 const Field = () => {
   // Init the SDK.
@@ -17,19 +17,19 @@ const Field = () => {
   // tokens and replacement strings.
   const replacementMap = [];
   const availableLocales = sdk.locales.available;
-  availableLocales.forEach((locale) => {
+  availableLocales.forEach(locale => {
     replacementMap[locale] = {};
   });
 
   const updateReplacementMap = () => {
     // Create an object containing initial tokens and matched replaced strings.
     // A manual object is used because Object.entries doesn't seem to work with Maps.
-    tokens.forEach((token) => {
+    tokens.forEach(token => {
       // Remove square brackets from token to get field name.
       const fieldId = token.slice(1, -1);
       // For each of the available locales, create an object to hold that
       // locale's tokens and replacement values.
-      availableLocales.forEach((locale) => {
+      availableLocales.forEach(locale => {
         // Only operate on locale if field has localization enabled.
         if (sdk.entry.fields[fieldId].locales.includes(locale)) {
           replacementMap[locale][token] =
@@ -48,7 +48,7 @@ const Field = () => {
           updateReplacementMap();
           // For some reason `sdk.field.setValue` doesn't work with locale, instead it sets the value for ALL locales.
           // Only operate on locale if field has localization enabled.
-          availableLocales.forEach((locale) => {
+          availableLocales.forEach(locale => {
             if (sdk.entry.fields[sdk.field.id].locales.includes(locale)) {
               sdk.entry.fields[sdk.field.id].setValue(
                 replaceAll(replacementPattern, replacementMap[locale]),
@@ -63,12 +63,12 @@ const Field = () => {
 
   // Helper function to replace multiple strings within a string in one go.
   const replaceAll = (str, mapObj) => {
-    const escapedObjKeys = Object.keys(mapObj).map((e) => {
+    const escapedObjKeys = Object.keys(mapObj).map(e => {
       // Escape the brackets for proper use in RegExp below.
-      return e.replace("[", "\\[").replace("]", "\\]");
+      return e.replace('[', '\\[').replace(']', '\\]');
     });
-    const regex = new RegExp(escapedObjKeys.join("|"), "g");
-    return str.replace(regex, (matched) => {
+    const regex = new RegExp(escapedObjKeys.join('|'), 'g');
+    return str.replace(regex, matched => {
       return mapObj[matched];
     });
   };
