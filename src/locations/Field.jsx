@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { /* useCMA, */ useSDK } from '@contentful/react-apps-toolkit';
-import { SingleLineEditor } from '@contentful/field-editor-single-line';
+import React, { useEffect } from "react";
+import { /* useCMA, */ useSDK } from "@contentful/react-apps-toolkit";
+import { SingleLineEditor } from "@contentful/field-editor-single-line";
 
 const Field = () => {
   // Init the SDK.
@@ -32,7 +32,8 @@ const Field = () => {
       availableLocales.forEach((locale) => {
         // Only operate on locale if field has localization enabled.
         if (sdk.entry.fields[fieldId].locales.includes(locale)) {
-          replacementMap[locale][token] = sdk.entry.fields[fieldId].getValue(locale);
+          replacementMap[locale][token] =
+            sdk.entry.fields[fieldId].getValue(locale);
         }
       });
     });
@@ -49,7 +50,10 @@ const Field = () => {
           // Only operate on locale if field has localization enabled.
           availableLocales.forEach((locale) => {
             if (sdk.entry.fields[sdk.field.id].locales.includes(locale)) {
-              sdk.entry.fields[sdk.field.id].setValue(replaceAll(replacementPattern, replacementMap[locale]), locale);
+              sdk.entry.fields[sdk.field.id].setValue(
+                replaceAll(replacementPattern, replacementMap[locale]),
+                locale
+              );
             }
           });
         });
@@ -61,9 +65,9 @@ const Field = () => {
   const replaceAll = (str, mapObj) => {
     const escapedObjKeys = Object.keys(mapObj).map((e) => {
       // Escape the brackets for proper use in RegExp below.
-      return e.replace('[', '\\[').replace(']', '\\]');
+      return e.replace("[", "\\[").replace("]", "\\]");
     });
-    const regex = new RegExp(escapedObjKeys.join('|'), 'g');
+    const regex = new RegExp(escapedObjKeys.join("|"), "g");
     return str.replace(regex, (matched) => {
       return mapObj[matched];
     });
@@ -89,7 +93,13 @@ const Field = () => {
 
   // TODO: It's not possible to disable a field from editing via the UI when it is marked as the title.
   // Instead, you can leverage field-level perms to mark this field as read-only for relevant roles.
-  return <SingleLineEditor field={sdk.field} locales={sdk.locales} isInitiallyDisabled={true} />;
+  return (
+    <SingleLineEditor
+      field={sdk.field}
+      locales={sdk.locales}
+      isInitiallyDisabled={true}
+    />
+  );
 };
 
 export default Field;
